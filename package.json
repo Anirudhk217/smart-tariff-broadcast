@@ -1,0 +1,11 @@
+{
+  "name": "smart-tariff-broadcast",
+  "private": true,
+  "type": "module",
+  "description": "The cheapest and greenest times to use electricity in your part of Great Britain.",
+  "scripts": {
+    "test": "node --test",
+    "fetch": "node scripts/fetch-data.mjs",
+    "start": "npx --yes serve@14.2.4 site"
+  }
+}

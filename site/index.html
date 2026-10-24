@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Smart-Tariff Broadcast</title>
+  <meta name="description" content="The cheapest and greenest times to use electricity in your part of Great Britain, from live Octopus Agile prices and the National Grid carbon forecast.">
+  <meta name="theme-color" content="#0f1b2d">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,600..800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap mast-row">
+      <div class="brand">
+        <span class="on-air" aria-hidden="true"></span>
+        <h1>Smart-Tariff Broadcast</h1>
+      </div>
+      <button class="region-btn" id="region-btn" aria-expanded="false" aria-controls="region-panel">Choose region</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel" id="region-panel" aria-labelledby="region-title" hidden>
+      <h2 id="region-title">Where are you?</h2>
+      <p class="muted">Prices and carbon differ by region. Enter your postcode, or pick your region.</p>
+      <form class="row" id="postcode-form">
+        <label class="sr-only" for="postcode">Postcode</label>
+        <input id="postcode" autocomplete="postal-code" placeholder="Postcode, e.g. SW1A 1AA">
+        <button class="btn" type="submit">Find</button>
+      </form>
+      <p class="hint" id="postcode-status" aria-live="polite"></p>
+      <label class="sr-only" for="region-select">Region</label>
+      <select id="region-select"></select>
+    </section>
+
+    <section class="now" aria-labelledby="now-title">
+      <p class="eyebrow" id="now-title">On air now <span id="now-range"></span></p>
+      <div class="now-grid">
+        <div>
+          <div class="big num" id="now-price">–</div>
+          <div class="muted">per kWh on Agile</div>
+        </div>
+        <div>
+          <div class="big num small-big" id="now-carbon">–</div>
+          <div class="muted">gCO₂ per kWh</div>
+        </div>
+        <span class="band" id="now-band"></span>
+      </div>
+      <p class="next" id="now-next"></p>
+    </section>
+
+    <section aria-labelledby="bc-title">
+      <div class="section-head">
+        <h2 id="bc-title">Today's broadcast</h2>
+        <button class="btn ghost small" id="share-btn">Share</button>
+      </div>
+      <ul class="bulletin" id="bulletin"></ul>
+      <p class="hint" id="share-status" aria-live="polite"></p>
+    </section>
+
+    <section aria-labelledby="chart-title">
+      <div class="section-head">
+        <h2 id="chart-title">Next 48 hours</h2>
+        <div class="legend"><span class="key price"></span>Price <span class="key carbon"></span>Carbon</div>
+      </div>
+      <div class="chart-wrap"><svg id="chart" role="img" aria-label="Electricity price and carbon forecast"></svg></div>
+      <p class="hint" id="chart-note"></p>
+    </section>
+
+    <section aria-labelledby="plan-title">
+      <div class="section-head">
+        <h2 id="plan-title">Best time to run</h2>
+        <div class="seg" role="radiogroup" aria-label="Optimise for">
+          <button role="radio" data-mode="price" aria-checked="true">Cheapest</button>
+          <button role="radio" data-mode="carbon" aria-checked="false">Greenest</button>
+          <button role="radio" data-mode="balance" aria-checked="false">Both</button>
+        </div>
+      </div>
+      <div class="list" id="appliances"></div>
+      <details class="add">
+        <summary>Add an appliance</summary>
+        <form id="add-form" class="add-form">
+          <div class="field"><label for="a-name">Name</label><input id="a-name" required placeholder="Immersion heater"></div>
+          <div class="field"><label for="a-hours">Hours</label><input id="a-hours" type="number" min="0.5" max="12" step="0.5" value="2" required></div>
+          <div class="field"><label for="a-kwh">kWh used</label><input id="a-kwh" type="number" min="0.1" max="100" step="0.1" value="3" required></div>
+          <button class="btn" type="submit">Add</button>
+        </form>
+      </details>
+    </section>
+
+    <footer class="foot">
+      <p id="data-status">Loading prices…</p>
+      <p>Prices are Octopus Agile unit rates including VAT, published around 4pm for the next day. On another tariff? Use <strong>Greenest</strong>, which works for everyone. Carbon forecast from the <a href="https://carbonintensity.org.uk" target="_blank" rel="noopener">National Grid ESO Carbon Intensity API</a> (CC BY 4.0). Not affiliated with Octopus Energy.</p>
+    </footer>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
